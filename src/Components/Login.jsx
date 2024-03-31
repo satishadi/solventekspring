@@ -19,7 +19,7 @@ const Login = () => {
   const handleSubmit = (e) => {
     e.preventDefault();
 
-    // Check if credentials exist in the database
+    
 
     axios
       .get("http://localhost:8080/register/get")
@@ -49,7 +49,7 @@ const Login = () => {
   };
 
   const handleLogout = () => {
-    // Clear user details from cookies and reset state
+   
     Cookies.remove("user");
 
     setUser(null);

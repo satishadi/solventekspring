@@ -19,8 +19,12 @@ import Cookies from "js-cookie";
 import AdminCreateProduct from "./Components/AdminCreateProduct";
 import Logout from "./Components/Logout";
 
+export const contextbuy = React.createContext();
+
 function App() {
   const [userDetails, setUserDetails] = useState(null);
+
+  const [buy, setBuy] = useState([]);
 
   // useEffect(() => {
   //   const user = Cookies.get("user");
@@ -61,23 +65,26 @@ function App() {
           </div>
         </div>
 
-        <div className="paths">
-          <Routes>
-            {/* Your other routes */}
-            <Route path="login" element={<Login />} />
-            <Route path="products" element={<Products />} />
-            <Route path="register" element={<Register />} />
-            <Route path="home" element={<Home />} />
-            <Route path="modifyproducts/:id" element={<ModifyProducts />} />
-            <Route path="productsadmin" element={<ProductsAdmin />} />
-            <Route path="productsuser" element={<ProductsUser />} />
-            <Route path="logout" element={<Logout></Logout>}></Route>
-            <Route
-              path="admincreateproduct"
-              element={<AdminCreateProduct></AdminCreateProduct>}
-            ></Route>
-          </Routes>
-        </div>
+        <contextbuy.Provider value={setBuy}>
+          <div className="paths">
+            <Routes>
+              {/* Your other routes */}
+
+              <Route path="login" element={<Login />} />
+              <Route path="products" element={<Products />} />
+              <Route path="register" element={<Register />} />
+              <Route path="home" element={<Home />} />
+              <Route path="modifyproducts/:id" element={<ModifyProducts />} />
+              <Route path="productsadmin" element={<ProductsAdmin />} />
+              <Route path="productsuser" element={<ProductsUser />} />
+              <Route path="logout" element={<Logout></Logout>}></Route>
+              <Route
+                path="admincreateproduct"
+                element={<AdminCreateProduct></AdminCreateProduct>}
+              ></Route>
+            </Routes>
+          </div>
+        </contextbuy.Provider>
       </BrowserRouter>
     </div>
   );

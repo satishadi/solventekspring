@@ -4,6 +4,7 @@ import { Link, useNavigate } from "react-router-dom";
 
 const Logout = () => {
   const [userDetails, setUserDetails] = useState(null);
+  const navigate = useNavigate();
 
   useEffect(() => {
     const user = Cookies.get("user");
@@ -12,9 +13,24 @@ const Logout = () => {
     }
   }, []);
 
+  function handleLogout() {
+    Cookies.remove("user");
+    setUserDetails(null);
+  }
+
   return (
     <div>
-      LogoutSuccessfull:<Link to="/login">Login</Link>
+      {userDetails ? (
+        <div style={{ marginTop: "40px" }}>
+          <h2>click here to logout</h2>
+          <button onClick={handleLogout}>Logout</button>
+        </div>
+      ) : (
+        <div>
+          <h1>LogoutSuccessfull:</h1>
+          <Link to="/login">Login</Link>
+        </div>
+      )}
     </div>
   );
 };

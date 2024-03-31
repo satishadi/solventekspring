@@ -1,10 +1,14 @@
 import axios from "axios";
 import Cookies from "js-cookie";
-import React, { useEffect, useState } from "react";
-import { Link, useNavigate } from "react-router-dom";
+import React, { useContext, useEffect, useState } from "react";
+
+import { useNavigate } from "react-router-dom";
+import { contextbuy } from "../App.js";
 
 const ProductsUser = () => {
   const [proudcts, setProducts] = useState([]);
+  const contextdata = useContext(contextbuy);
+  const [bought, setBought] = useState(null);
 
   const [userDetails, setUserDetails] = useState(null);
   const navigate = useNavigate();
@@ -33,6 +37,25 @@ const ProductsUser = () => {
         console.log(n);
       });
   }, []);
+
+  function handleBuy(n) {
+    console.log(n.insuranceName);
+    //contextdata([...n, n]);
+    setBought("successfully bought this product");
+
+    axios
+      .post("http://localhost:8080/products/insbht", {
+        productId: n.insuranceId,
+      })
+      .then((response) => {
+        console.log("Registration successful!", response.data);
+        // Optionally, you can do something upon successful registration
+      })
+      .catch((error) => {
+        console.error("Error occurred during registration:", error);
+        // Optionally, handle error
+      });
+  }
 
   return (
     <div>
@@ -63,7 +86,18 @@ const ProductsUser = () => {
                     Insurance Premium {n.insurancePremium}
                   </p>
 
-                  <button className="btn btn-success">Buy Product</button>
+                  {bought === null ? (
+                    <button
+                      className="btn btn-success"
+                      onClick={() => {
+                        handleBuy(n);
+                      }}
+                    >
+                      Buy Product
+                    </button>
+                  ) : (
+                    bought
+                  )}
                 </div>
               </div>
             </div>

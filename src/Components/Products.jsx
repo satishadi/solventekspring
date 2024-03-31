@@ -13,6 +13,7 @@ const Products = () => {
     const user = Cookies.get("user");
     if (user) {
       setUserDetails(JSON.parse(user));
+      // console.log(userDetails.role);
     }
   }, []);
 
@@ -37,6 +38,12 @@ const Products = () => {
   return (
     <div>
       Products List
+      <div>
+        {userDetails &&
+          (userDetails.role === "admin"
+            ? navigate("/productsadmin")
+            : navigate("/productsuser"))}
+      </div>
       <div className="logindetails">
         {userDetails && (
           <div>
